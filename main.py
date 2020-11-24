@@ -36,6 +36,10 @@ from data import QADataset, Tokenizer, Vocabulary
 from model import BaselineReader
 from utils import cuda, search_span_endpoints, unpack
 
+# Fix for torch 1.4
+import ctypes
+ctypes.cdll.LoadLibrary('caffe2_nvrtc.dll')
+
 
 _TQDM_BAR_SIZE = 75
 _TQDM_LEAVE = False
