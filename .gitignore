@@ -4,3 +4,6 @@ datasets/
 venv/
 *.pt
 *.jsonl.gz
+.idea/
+/datasets/
+/glove/
