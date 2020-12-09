@@ -175,6 +175,13 @@ parser.add_argument(
     help='embedding dimension',
 )
 parser.add_argument(
+    '-led',
+    '--letter_embedding_dim',
+    type=int,
+    default=25,
+    help='letter embedding dimension, 0 to disable',
+)
+parser.add_argument(
     '--hidden_dim',
     type=int,
     default=256,
@@ -470,6 +477,7 @@ def main(args):
 
     # Create vocabulary and tokenizer.
     vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
+    args.vocabulary = vocabulary.words
     tokenizer = Tokenizer(vocabulary)
     for dataset in (train_dataset, dev_dataset):
         dataset.register_tokenizer(tokenizer)

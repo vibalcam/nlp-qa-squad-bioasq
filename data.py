@@ -203,9 +203,14 @@ class QADataset(Dataset):
         questions = []
         start_positions = []
         end_positions = []
+        passages_words = []
+        questions_words = []
         for idx in example_idxs:
             # Unpack QA sample and tokenize passage/question.
             qid, passage, question, answer_start, answer_end = self.samples[idx]
+
+            passages_words.append(passage)
+            questions_words.append(question)
 
             # Convert words to tensor.
             passage_ids = torch.tensor(
@@ -223,7 +228,7 @@ class QADataset(Dataset):
             start_positions.append(answer_start_ids)
             end_positions.append(answer_end_ids)
 
-        return zip(passages, questions, start_positions, end_positions)
+        return zip(passages, questions, start_positions, end_positions, passages_words, questions_words)
 
     def _create_batches(self, generator, batch_size):
         """
@@ -256,6 +261,8 @@ class QADataset(Dataset):
 
             passages = []
             questions = []
+            passage_words = []
+            question_words = []
             start_positions = torch.zeros(bsz)
             end_positions = torch.zeros(bsz)
             max_passage_length = 0
@@ -266,6 +273,8 @@ class QADataset(Dataset):
                 questions.append(current_batch[ii][1])
                 start_positions[ii] = current_batch[ii][2]
                 end_positions[ii] = current_batch[ii][3]
+                passage_words.append(current_batch[ii][4])
+                question_words.append(current_batch[ii][5])
                 max_passage_length = max(
                     max_passage_length, len(current_batch[ii][0])
                 )
@@ -288,7 +297,9 @@ class QADataset(Dataset):
                 'passages': cuda(self.args, padded_passages).long(),
                 'questions': cuda(self.args, padded_questions).long(),
                 'start_positions': cuda(self.args, start_positions).long(),
-                'end_positions': cuda(self.args, end_positions).long()
+                'end_positions': cuda(self.args, end_positions).long(),
+                'passage_words': passage_words,
+                'question_words': question_words
             }
 
             if no_more_data:

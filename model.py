@@ -3,11 +3,15 @@
 Author:
     Shrey Desai and Yasumasa Onoe
 """
+import string
+from typing import List
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from data import PAD_TOKEN, UNK_TOKEN
 from utils import cuda, load_cached_embeddings
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
@@ -59,6 +63,7 @@ class AlignedAttention(nn.Module):
     Returns:
         Attention scores over question sequences, [batch_size, p_len, q_len].
     """
+
     def __init__(self, p_dim):
         super().__init__()
         self.linear = nn.Linear(p_dim, p_dim)
@@ -92,6 +97,7 @@ class SpanAttention(nn.Module):
     Returns:
         Attention scores over sequence length, [batch_size, len].
     """
+
     def __init__(self, q_dim):
         super().__init__()
         self.linear = nn.Linear(q_dim, 1)
@@ -122,6 +128,7 @@ class BilinearOutput(nn.Module):
     Returns:
         Logits over the input sequence, [batch_size, p_len].
     """
+
     def __init__(self, p_dim, q_dim):
         super().__init__()
         self.linear = nn.Linear(q_dim, p_dim)
@@ -133,6 +140,51 @@ class BilinearOutput(nn.Module):
         # Assign -inf to pad tokens
         p_scores.data.masked_fill_(p_mask.data, -float('inf'))
         return p_scores  # [batch_size, p_len]
+
+
+class LetterEmbeddings(nn.Module):
+    vocab = string.ascii_lowercase + ' ?!-_'
+    idx_pad = 0
+    idx_unk = 1
+
+    def __init__(self, word_vocabulary, embedding_dim=25, use_gpu=True):
+        super().__init__()
+        # Index 0 is for padding and 1 is for an unknown char
+        self.net = nn.Embedding(len(self.vocab) + 2, embedding_dim, scale_grad_by_freq=True)
+        self.word_vocabulary = word_vocabulary
+        self.embedding_dim = embedding_dim
+        self.device = torch.device('cuda' if use_gpu else 'cpu')
+
+    def forward(self, letters: torch.LongTensor):
+        return self.net(letters)
+
+    def get_embeddings(self, word_embeddings: torch.LongTensor, sentences: List[List[str]]):
+        shape = word_embeddings.shape
+        word_embeddings = word_embeddings.reshape(-1)
+        words = []
+        max_length = 0
+        for idx in word_embeddings:
+            word = self.word_vocabulary[idx]
+            words.append((word, len(word)))
+            if max_length < len(word):
+                max_length = len(word)
+
+        x = torch.zeros(len(words), self.embedding_dim, device=self.device)
+        for i, (word, length) in enumerate(words):
+            if word == PAD_TOKEN:   # if padding just use idx 0 of embeddings
+                x[i, :] = self(torch.zeros(1, dtype=torch.long, device=self.device)).unsqueeze(0)
+            elif word == UNK_TOKEN:     # # if unknown just use idx 0 of embeddings
+                x[i, :] = self(torch.ones(1, dtype=torch.long, device=self.device)).unsqueeze(0)
+            else:
+                temp = torch.zeros(len(word), dtype=torch.long, device=self.device)     # set all as padding
+                idx = torch.as_tensor(np.array(list(word.lower()))[:, None] == np.array(list(self.vocab))[None],
+                                      device=self.device).nonzero()
+                temp[:length] = 1   # set as unknown
+                temp[idx[:, 0]] = idx[:, 1]     # set the known values
+
+                x[i, :] = (self(temp).sum(0)) / length
+
+        return x.reshape(*shape, self.embedding_dim)
 
 
 class BaselineReader(nn.Module):
@@ -167,6 +219,7 @@ class BaselineReader(nn.Module):
         Logits for start positions and logits for end positions.
         Tuple: ([batch_size, p_len], [batch_size, p_len])
     """
+
     def __init__(self, args):
         super().__init__()
 
@@ -174,16 +227,19 @@ class BaselineReader(nn.Module):
         self.pad_token_id = args.pad_token_id
 
         # Initialize embedding layer (1)
-        self.embedding = nn.Embedding(args.vocab_size, args.embedding_dim)
+        self.embedding = nn.Embedding(args.vocab_size, args.embedding_dim)  # word embeddings
+        self.letter_embedding = None    # letter embeddings
+        if args.letter_embedding_dim > 0:
+            self.letter_embedding = LetterEmbeddings(args.vocabulary, args.letter_embedding_dim, args.use_gpu)
 
         # Initialize Context2Query (2)
-        self.aligned_att = AlignedAttention(args.embedding_dim)
+        self.aligned_att = AlignedAttention(args.embedding_dim + args.letter_embedding_dim)
 
         rnn_cell = nn.LSTM if args.rnn_cell_type == 'lstm' else nn.GRU
 
         # Initialize passage encoder (3)
         self.passage_rnn = rnn_cell(
-            args.embedding_dim * 2,
+            (args.embedding_dim + args.letter_embedding_dim) * 2,
             args.hidden_dim,
             bidirectional=args.bidirectional,
             batch_first=True,
@@ -191,7 +247,7 @@ class BaselineReader(nn.Module):
 
         # Initialize question encoder (4)
         self.question_rnn = rnn_cell(
-            args.embedding_dim,
+            args.embedding_dim + args.letter_embedding_dim,
             args.hidden_dim,
             bidirectional=args.bidirectional,
             batch_first=True,
@@ -283,17 +339,26 @@ class BaselineReader(nn.Module):
         # 1) Embedding Layer: Embed the passage and question.
         passage_embeddings = self.embedding(batch['passages'])  # [batch_size, p_len, p_dim]
         question_embeddings = self.embedding(batch['questions'])  # [batch_size, q_len, q_dim]
+        if self.letter_embedding is not None:
+            # [batch_size, p_len, p_dim + letter_embeddings]
+            passage_embeddings = torch.cat((passage_embeddings,
+                                            self.letter_embedding.get_embeddings(batch['passage'],
+                                                                                 batch['passage_words'])), 2)
+            # [batch_size, q_len, q_dim + letter_embeddings]
+            question_embeddings = torch.cat((question_embeddings,
+                                             self.letter_embedding.get_embeddings(batch['questions'],
+                                                                                  batch['question_words'])), 2)
 
         # 2) Context2Query: Compute weighted sum of question embeddings for
         #        each passage word and concatenate with passage embeddings.
         aligned_scores = self.aligned_att(
             passage_embeddings, question_embeddings, ~question_mask
         )  # [batch_size, p_len, q_len]
-        aligned_embeddings = aligned_scores.bmm(question_embeddings)  # [batch_size, p_len, q_dim]
+        aligned_embeddings = aligned_scores.bmm(question_embeddings)  # [batch_size, p_len, q_dim + letter_embeddings]
         passage_embeddings = cuda(
             self.args,
             torch.cat((passage_embeddings, aligned_embeddings), 2),
-        )  # [batch_size, p_len, p_dim + q_dim]
+        )  # [batch_size, p_len, p_dim + q_dim + 2 * letter_embeddings]
 
         # 3) Passage Encoder
         passage_hidden = self.sorted_rnn(
