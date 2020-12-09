@@ -336,7 +336,7 @@ def train(args, epoch, model, dataset):
         weight_decay=args.weight_decay,
     )
 
-    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=2)
+    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=1)
 
     # Set up training dataloader. Creates `args.batch_size`-sized
     # batches from available samples.
@@ -371,7 +371,7 @@ def train(args, epoch, model, dataset):
 
     result = train_loss / train_steps
     # scheduler.step(train_loss / train_steps)
-    # optimizer.param_groups[0]['lr']
+    # print(optimizer.param_groups[0]['lr'])
     return result
 
 
