@@ -19,6 +19,7 @@ import json
 import re
 import string
 from collections import Counter
+import random
 
 
 def normalize_answer(s):
@@ -122,7 +123,7 @@ def read_predictions(prediction_file):
     return predictions
 
 
-def read_answers(gold_file):
+def read_answers(gold_file, split_dataset=True):
     """Reads answers from dataset file. Each question (marked by its qid)
     can have multiple possible answer spans.
 
@@ -140,7 +141,14 @@ def read_answers(gold_file):
                 continue
             for qa in example['qas']:
                 answers[qa['qid']] = qa['answers']
-    return answers
+
+    if split_dataset:
+        random.seed(4)
+        items_list = list(answers.items())
+        random.shuffle(items_list)
+        return dict(items_list[int(len(answers)*0.8):])
+    else:
+        return answers
 
 
 def evaluate(answers, predictions, skip_no_answer=False):
@@ -181,9 +189,12 @@ if __name__ == '__main__':
     parser.add_argument('--dataset_path', type=str, help='path to evaluation dataset')
     parser.add_argument('--output_path', type=str, help='path to output predictions')
     parser.add_argument('--skip_no_answer', action='store_true')
+    parser.add_argument('--split_dataset', action='store_true',
+        default=False, help='it is true if we are evaluating a splited dataset')
+
     args = parser.parse_args()
 
-    answers = read_answers(args.dataset_path)
+    answers = read_answers(args.dataset_path, args.split_dataset)
     predictions = read_predictions(args.output_path)
     metrics = evaluate(answers, predictions, args.skip_no_answer)
     print(metrics)

@@ -8,6 +8,7 @@ import os
 import json
 import gzip
 import pickle
+import random
 
 import torch
 from tqdm import tqdm
@@ -43,7 +44,7 @@ def unpack(tensor):
     return tensor.cpu().numpy().tolist()
 
 
-def load_dataset(path):
+def load_dataset(path, split_dataset=False, is_train=True):
     """
     Loads MRQA-formatted dataset from path.
 
@@ -58,7 +59,16 @@ def load_dataset(path):
             json.loads(l.rstrip())
             for l in tqdm(f, desc=f'loading \'{path}\'', leave=False)
         ]
+
     meta, samples = elems[0], elems[1:]
+
+    if split_dataset:
+        random.seed(4)
+        random.shuffle(samples)
+        if is_train:
+            samples = samples[1:int(len(elems)*0.8)]
+        else:
+            samples = samples[int(len(elems)*0.8):]
     return (meta, samples)
 
 
@@ -94,7 +104,7 @@ def load_embeddings(path):
         Dictionary mapping words (strings) to vectors (list of floats).
     """
     embedding_map = {}
-    with open(path) as f:
+    with open(path, encoding="utf8") as f:
         next(f)  # Skip header.
         for line in f:
             try:

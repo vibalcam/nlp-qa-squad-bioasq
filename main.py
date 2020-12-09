@@ -21,6 +21,7 @@ Author:
 """
 
 import argparse
+import os
 import pprint
 import json
 
@@ -36,6 +37,11 @@ from data import QADataset, Tokenizer, Vocabulary
 from model import BaselineReader
 from utils import cuda, search_span_endpoints, unpack
 
+# Fix for torch 1.4
+import ctypes
+ctypes.cdll.LoadLibrary('caffe2_nvrtc.dll')
+
+# os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 _TQDM_BAR_SIZE = 75
 _TQDM_LEAVE = False
@@ -74,6 +80,12 @@ parser.add_argument(
     help='GloVe embedding path',
 )
 parser.add_argument(
+    '--second_embedding_path',
+    type=str,
+    default='glove/glove.6B.300d.txt',
+    help='Second embeddings for improving performance',
+)
+parser.add_argument(
     '--train_path',
     type=str,
     required=True,
@@ -84,6 +96,12 @@ parser.add_argument(
     type=str,
     required=True,
     help='dev dataset path',
+)
+parser.add_argument(
+    '--second_path',
+    type=str,
+    default="datasets/bioasq.jsonl.gz",
+    help='second dev dataset path',
 )
 parser.add_argument(
     '--max_context_length',
@@ -99,6 +117,12 @@ parser.add_argument(
 )
 parser.add_argument(
     '--output_path',
+    type=str,
+    required=False,
+    help='predictions output path',
+)
+parser.add_argument(
+    '--output2_path',
     type=str,
     required=False,
     help='predictions output path',
@@ -170,6 +194,15 @@ parser.add_argument(
     default=300,
     help='embedding dimension',
 )
+
+parser.add_argument(
+    '--epoch_change_embedding',
+    type=int,
+    default=8,
+    help='in this epoch we change the embeddings to the second embeddings'
+
+)
+
 parser.add_argument(
     '--hidden_dim',
     type=int,
@@ -303,6 +336,8 @@ def train(args, epoch, model, dataset):
         weight_decay=args.weight_decay,
     )
 
+    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=2)
+
     # Set up training dataloader. Creates `args.batch_size`-sized
     # batches from available samples.
     train_dataloader = tqdm(
@@ -334,7 +369,10 @@ def train(args, epoch, model, dataset):
             f'[train] epoch = {epoch}, loss = {train_loss / train_steps:.6f}'
         )
 
-    return train_loss / train_steps
+    result = train_loss / train_steps
+    # scheduler.step(train_loss / train_steps)
+    # optimizer.param_groups[0]['lr']
+    return result
 
 
 def evaluate(args, epoch, model, dataset):
@@ -462,7 +500,7 @@ def main(args):
 
     # Set up datasets.
     train_dataset = QADataset(args, args.train_path)
-    dev_dataset = QADataset(args, args.dev_path)
+    dev_dataset = QADataset(args, args.train_path)
 
     # Create vocabulary and tokenizer.
     vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
@@ -477,6 +515,9 @@ def main(args):
     print(f'train samples = {len(train_dataset)}')
     print(f'dev samples = {len(dev_dataset)}')
     print()
+
+    # We make a copy of the original dev_dataset for make more than one prediction
+    original_dev_dataset = dev_dataset
 
     # Select model.
     model = _select_model(args)
@@ -505,8 +546,39 @@ def main(args):
         best_eval_loss = float('inf')
 
         # Begin training.
-        for epoch in range(1, args.epochs + 1):
+        for epoch in range(1,
+                           args.epochs + 1):
             # Perform training and evaluation steps.
+
+            # Change embeddings and dev_path to specialize in other dataset
+            if epoch == args.epoch_change_embedding:
+                # Set up second datasets.
+                train_dataset = QADataset(args, args.second_path, split_datatset=True)
+                dev_dataset = QADataset(args, args.second_path, split_datatset=True, is_train=False)
+                original_dev_dataset = QADataset(args, args.dev_path)
+
+                # Create vocabulary and tokenizer.
+                vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
+                tokenizer = Tokenizer(vocabulary)
+                for dataset in (train_dataset, dev_dataset, original_dev_dataset):
+                    dataset.register_tokenizer(tokenizer)
+                args.vocab_size = len(vocabulary)
+                args.pad_token_id = tokenizer.pad_token_id
+                print(f'second vocabulary -> number words = {len(vocabulary)}')
+
+                # Reinitialize the embedding layer
+                model.embedding = nn.Embedding(args.vocab_size, args.embedding_dim)
+
+                # Change the embeddings
+                model.load_pretrained_embeddings(
+                    vocabulary, args.second_embedding_path
+                )
+
+                model = cuda(args, model)
+
+                # Reinitialize the best loss
+                best_eval_loss = float('inf')
+
             train_loss = train(args, epoch, model, train_dataset)
             eval_loss = evaluate(args, epoch, model, dev_dataset)
 
@@ -534,18 +606,30 @@ def main(args):
                 print()
                 break
 
+            if epoch == args.epoch_change_embedding:
+                break
+
     if args.do_test:
         # Write predictions to the output file. Use the printed command
         # below to obtain official EM/F1 metrics.
+        write_predictions(args, model, original_dev_dataset)
+        args.output_path = args.output2_path
         write_predictions(args, model, dev_dataset)
         eval_cmd = (
             'python3 evaluate.py '
-            f'--dataset_path {args.dev_path} '
+            f'--dataset_path {args.second_path} '
             f'--output_path {args.output_path}'
         )
+        eval_cmd2 = (
+            'python3 evaluate.py '
+            f'--dataset_path {args.dev_path} '
+            f'--output_path {args.output2_path}'
+        )
         print()
-        print(f'predictions written to \'{args.output_path}\'')
-        print(f'compute EM/F1 with: \'{eval_cmd}\'')
+        print(f'first predictions written to \'{args.output_path}\'')
+        print(f'second predictions written to \'{args.output_path}\'')
+        print(f'compute first EM/F1 with: \'{eval_cmd}\'')
+        print(f'compute second EM/F1 with: \'{eval_cmd2}\'')
         print()
 
 

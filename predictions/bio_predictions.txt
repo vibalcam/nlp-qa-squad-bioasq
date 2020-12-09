@@ -1,0 +1,300 @@
+{"qid": "32d5c9e48b75450989842a6e97cc6f21", "answer": "sglt2"}
+{"qid": "00d9954d30b64647a55f59618756c1ce", "answer": "naloxone 0.8"}
+{"qid": "8f221782cbec411ab44ab1376d453c6e", "answer": "dabigatran"}
+{"qid": "5b937d99df5342ca8ffb9a12ec8714ce", "answer": "abl tyrosine kinase inhibitor currently approved for the treatment of chronic myeloid leukemia"}
+{"qid": "53453018272b4cbaa4e322487a25246c", "answer": "nerve growth factor"}
+{"qid": "beeb58f583fa4c9192e2fdb72f727d1a", "answer": "nf1"}
+{"qid": "7b387c3302ca4a718ed588d6618acea4", "answer": "chediak - higashi syndrome"}
+{"qid": "1a50ca89e68b478197f95616dd07746e", "answer": "nsd1"}
+{"qid": "d8237f9d763b42d483bb971b70dd1706", "answer": "alzheimer 's disease"}
+{"qid": "55f7e26b1a6a41c08f110ecb1c372358", "answer": "replicating domains , a property conserved among centromeres in fungi and some higher eukaryotes"}
+{"qid": "eb43bbf0c4bb484dba710614100c1204", "answer": "par - clip"}
+{"qid": "412a49803a00424099cd84a75d92bd63", "answer": "bcr - abl"}
+{"qid": "f06fc76bb7624c4ba8baf1c01fb0c0a8", "answer": "diamond - blackfan anemia"}
+{"qid": "c4ce6c58dde54eb782917fdb75d3caf0", "answer": "lysosomal enzyme beta glucocerebrosidase"}
+{"qid": "43b0abaf398b499e989d529cdb03c301", "answer": "phthiriasis"}
+{"qid": "0bf17a3982cf449e9c3c7f52a98650c2", "answer": "pulmonary embolism"}
+{"qid": "6bf60ce1cd73408f93464f39ccdb6be4", "answer": "penicillinase - resistant"}
+{"qid": "930ebd41e49942059fff966207ce5c03", "answer": "pneumonia"}
+{"qid": "2400eadb605d444e87f69ff530a1856c", "answer": "connective tissue"}
+{"qid": "bbcb4c12247c4dfe95445768887501e4", "answer": "iron"}
+{"qid": "e29d0b192b44413e95a08a2afa14fcbc", "answer": "zfhz1b"}
+{"qid": "9bd63fef68a04a01ba5834b3974db52c", "answer": "codons"}
+{"qid": "8c2a0605602f461d93cb146b331734aa", "answer": "mab"}
+{"qid": "857f5bd2ba3140ffa45bbf468805dfa3", "answer": "autosomal dominant"}
+{"qid": "2227001cc02f46f4b3d6c776d15071cd", "answer": "mrsa"}
+{"qid": "56ed50d7657b481ea0e2512c19bb0438", "answer": "set domain"}
+{"qid": "8bdfb8eb6c274633b133fbadf8eaa257", "answer": "rosiglitazone , a synthetic peroxisome proliferator - activated receptor - \u03b3"}
+{"qid": "7c88f7862dc74ae8bded750a958b2e65", "answer": "spleen tyrosine kinase"}
+{"qid": "6246c07c53fc4659a83f4955f195a4be", "answer": "nf1"}
+{"qid": "d11256fd28f844698bd688152f464ae5", "answer": "l - dopa"}
+{"qid": "07eb57f9a700412681dd07f3b615a303", "answer": "bcr - abl"}
+{"qid": "bf4ddb3d39ae4a8ebc75f6c6b7218fbb", "answer": "set domain"}
+{"qid": "cded98aedc6a494e8a1a1d00dd9f85aa", "answer": "alzheimer 's disease"}
+{"qid": "cb6b2fd507404102b664bfb2cb1ad97e", "answer": "acrokeratosis paraneoplastica"}
+{"qid": "5d94e2adbfb64ff1b3a5b25d968b5828", "answer": "ncx inhibitor kb - r7943"}
+{"qid": "785d411170fb461891f9aaf5794d8c28", "answer": "duavee"}
+{"qid": "8a4995f43df745ccad6b73c4c7b343ea", "answer": "mrsa"}
+{"qid": "4a5e280ba4534d708cd9a706f914288a", "answer": "pneumonia"}
+{"qid": "16a25da84839436a89074d9ddedd979f", "answer": "restless legs syndrome"}
+{"qid": "2c0e0f4aa55c4021a72dbdfb12a37f40", "answer": "corticostriatal"}
+{"qid": "0cf3e09ca48743ab8afcd531f7b306e9", "answer": "spectrins"}
+{"qid": "15bd193287ec4c43b761c54699d4ca55", "answer": "viliuisk encephalomyelitis"}
+{"qid": "9a225d6aa2034d27a58fc2dea42dbe40", "answer": "parkinson 's disease ( pd"}
+{"qid": "b3cdf347d3884750ab5f93ca7c8f1257", "answer": "malaria"}
+{"qid": "ebd82668eb7c49faaf1bd4cce3dd47cb", "answer": "bcr - abl"}
+{"qid": "f40c5ca38b964c3fbfd353444320a3b9", "answer": "interferon responses to tb - specific antigens esat-6 and cfp-10 ) and in mice vaccinated"}
+{"qid": "b942fc23c0bf4ebe9bf8e76ac4b3a998", "answer": "mrsa"}
+{"qid": "990c3fbed6b34ba08dd9a7685e257613", "answer": "pulmonary arterial hypertension"}
+{"qid": "10762decaf494889b8a613727b54366b", "answer": "hiv"}
+{"qid": "8cb2d5ed371845bdbc1aef1bc23e2418", "answer": "alpha - synuclein"}
+{"qid": "1a0f88859ac041309e802081a92d69d7", "answer": "vel"}
+{"qid": "71df3d8251d84f0f8c452651b470a6ec", "answer": "focal cortical dysplasia"}
+{"qid": "1a6e6e4476ac4f3694bbf44eba26b5a9", "answer": "mrsa"}
+{"qid": "bcb2d242686c440fb698f05cac959004", "answer": "transcribed strand"}
+{"qid": "b473484f66344d0eab8d7d0180fd88e4", "answer": "iron"}
+{"qid": "4aa2254c611946849f987fbc7af289e2", "answer": "autosomal - dominant"}
+{"qid": "e6ccf71d79284970a5d7adfff0807ec8", "answer": "dabigatran"}
+{"qid": "1c213ca20e164591b8e737b5184e9108", "answer": "riociguat"}
+{"qid": "74501bd3f1354fecae7e54e935faa3e9", "answer": "hiv"}
+{"qid": "fc24f2392a694a878abd703ed179be42", "answer": "notch3 gene"}
+{"qid": "69c3caa799bb4990932019ccbabd967e", "answer": "alpha - synuclein"}
+{"qid": "a2d8fa1d4aec4b51af662fbe80cc7535", "answer": "tuberculosis"}
+{"qid": "b7b765a669484522bfdfa013ced2bc9d", "answer": "antioxidant"}
+{"qid": "84dfe31ea9704f369ff876aaf7937ab8", "answer": "transcribed strand"}
+{"qid": "04da2c70e07e4c2581afe158af0e1759", "answer": "cysteine"}
+{"qid": "fd51aa90ceb147e78cd27c4328ac7962", "answer": "covariate"}
+{"qid": "80319100e57e4e6bae3dd5bfdc5b1543", "answer": "epstein - barr virus"}
+{"qid": "ebb1ae34a73c4a5d839b1240da0af1a4", "answer": "flumazenil"}
+{"qid": "2948595cc8ae43138ef1c66a44e17706", "answer": "ptsd"}
+{"qid": "8a982cf38c2d47b0b8b6fa7d85dfa679", "answer": "alpha - synuclein"}
+{"qid": "27c5cce16a694b1292f9a384c43beab6", "answer": "opicapone is a novel catechol - o - methyltransferase"}
+{"qid": "302b827bb3634be7b8c958d4d56fa6da", "answer": "filter - aided"}
+{"qid": "94956aa6f46c40d6942aab9ac607436f", "answer": "quervain 's disease"}
+{"qid": "8e4362d962304849af0e9a9cf344f780", "answer": "sglt2"}
+{"qid": "a9464ddc76874f33bc3080db5c5c07b9", "answer": "autosomal dominant"}
+{"qid": "359b351dab714a9eb679ec9eef3d8227", "answer": "alzheimer 's disease"}
+{"qid": "951b2519bc4f461191fcb2cfbdb346b4", "answer": "lyst"}
+{"qid": "838f259cf3d94ed1a4628e26a79fa183", "answer": "alpha - synuclein"}
+{"qid": "b7441dc6481f4a8c8ea767fe70d618bb", "answer": "p38 kinases , the activation of which has been well - characterized"}
+{"qid": "3c81cb4513234032a3bb15f1165ca927", "answer": "dilated cardiomyopathy"}
+{"qid": "dabfffc898254535a9a607a6650d2562", "answer": "cysteine"}
+{"qid": "acb923e812724d94bc4863897a19ef39", "answer": "selenoprotein - p"}
+{"qid": "e1cc331e63084604b15264d8724c20de", "answer": "calmodulin - dependent serine / threonine phosphatase calcineurin"}
+{"qid": "e0f30444851747c08e3a6c06ba0be328", "answer": "transcribed strand"}
+{"qid": "513d7255d5544f56ac4e2cdea3c6e3c5", "answer": "bcr - abl"}
+{"qid": "42652e9339554e27af6c273cfd698386", "answer": "hippo"}
+{"qid": "ec16938dc3e040ca96362ca7d7677913", "answer": "mowat - wilson"}
+{"qid": "22db25e825ff4bcfb783e89d2d7a8162", "answer": "selenoprotein glutathione peroxidase ( gpx ) mrna . we have termed this protein sbp"}
+{"qid": "50efbe779a774f9abfa654638c3497ac", "answer": "pilocytic astrocytoma"}
+{"qid": "b4fcd51ad7b44e5b973a0b67bc523ce8", "answer": "endoplasmic reticulum - mediated unfolded protein response , consistent with the normal role of ataxin-3"}
+{"qid": "84268ced61744024a40b6f8d2316d275", "answer": "alpha - synuclein"}
+{"qid": "07d30350f8434b48815eaa39fc6cedd9", "answer": "shprintzen - goldberg syndrome"}
+{"qid": "bceaab52532745f2b18e2703008352a9", "answer": "tuberculosis"}
+{"qid": "12fa90a3c056479a92f47b23fd5275bf", "answer": "x"}
+{"qid": "c80dfd34b9334ad1b4191ebe7f406ed0", "answer": "pulmonary embolism"}
+{"qid": "c11e38b5379143f9895440d3ed5f0ff2", "answer": "iron"}
+{"qid": "cf65aa1d62524b4690d8d12f1565be18", "answer": "bacillus anthracis"}
+{"qid": "d451ee65e0e14baaa98a29b68092c5fc", "answer": "bazex"}
+{"qid": "d3cb2ae20ed644fa9da62fd47344b395", "answer": "mrsa"}
+{"qid": "0652e34262bc426d97340af838f8da7e", "answer": "flumazenil"}
+{"qid": "2e849ad8ec784301ae7f31f0261ab00e", "answer": "dabigatran"}
+{"qid": "c8be4f51b2ab4a5381c642b0ef7213c6", "answer": "mrsa"}
+{"qid": "ba508f5b8dfb4fbc83ecf9831706b686", "answer": "mowat - wilson"}
+{"qid": "fb1932c2568743f8a7e02da6141a50f9", "answer": "promyelocytic"}
+{"qid": "91ba5f0e9cdb420b8e49daf63935d388", "answer": "lysosomal"}
+{"qid": "3c5acbfea860401088f0e789580bf84b", "answer": "ncx"}
+{"qid": "133771e8d5b9448681074f5d120771a8", "answer": "protease activities of a disintegrin and metalloproteinase ( adam"}
+{"qid": "e7bc7aac09da4b57a6c64fa1b67bf938", "answer": "tgf - \u03b23"}
+{"qid": "0fd48e8ecbbf4547af93df0c4d6ecfe0", "answer": "connective tissue"}
+{"qid": "4edb95a363144efdb21977cc7f1912a8", "answer": "tuberculosis infection"}
+{"qid": "71db12729a584f868ff6889568d33526", "answer": "bcr - abl"}
+{"qid": "1a7c755b01c04164ba29934405c67228", "answer": "k - ras oncogene and in the p53 tumor suppressor"}
+{"qid": "f20fb69656624faba286b877bd7b0c35", "answer": "corynebacterium"}
+{"qid": "9de1c3ee5251428fb8ddac069c49e9e8", "answer": "corynebacterium"}
+{"qid": "e7dd43f614bd4a44808e13eb2dbde1f6", "answer": "tuberculosis"}
+{"qid": "b37db289ef2948e9b5e75fbc0cbd66bf", "answer": "actin"}
+{"qid": "8283a8628bfe440b908b5fe0ef0625ea", "answer": "chediak - higashi syndrome"}
+{"qid": "48fd74acae1f432cb35a1eea0ee94e16", "answer": "secukinumab"}
+{"qid": "8dc0bd08c09641c4a267b4b2ca0ddb25", "answer": "transcribed strand"}
+{"qid": "6874df2a5c5d43888cd33a65d4def0f4", "answer": "x syndrome"}
+{"qid": "657d5d7eecf249cb96e36f5b3a818fcf", "answer": "alpha - synuclein"}
+{"qid": "60face353b89434397ee1fbd3aa44915", "answer": "ectopic"}
+{"qid": "6952c83e31114a20b979dc5962329901", "answer": "overlapped , with the relative difference between sensitivities within 15 % for arthralgia"}
+{"qid": "9ee2e86c5d1a4a1a9251990f2f2d84c6", "answer": "transcribed strand"}
+{"qid": "117440db7a2441f29ff04ebe978b490f", "answer": "bone"}
+{"qid": "d4ee2e1fb7364cd6bb5931d72186c5bb", "answer": "desmosomes"}
+{"qid": "2a963d7335cb4cfa9452f4ded58a357f", "answer": "nestin"}
+{"qid": "fe31178b0e794792bab8b7ad3722944f", "answer": "malaria"}
+{"qid": "2729af5d87194532a74ffb452dcb9886", "answer": "k - ras"}
+{"qid": "08cbe847c7dd46e685e5a9239d668120", "answer": "rheumatoid arthritis"}
+{"qid": "a338247c1f654179887259220bfbd8d6", "answer": "heme"}
+{"qid": "caa2671c22184059b24fc1b2ad609ea4", "answer": "women"}
+{"qid": "b09a032cfe6b458dad0480594898b130", "answer": "mcleod"}
+{"qid": "b59f8200d7c241df95bf00fcbea3ba21", "answer": "forces"}
+{"qid": "5976ad62650747a3bc3be03c0e430c7d", "answer": "nf1"}
+{"qid": "169d1ca25e78425dbd60b6192286d3dd", "answer": "bcr - abl"}
+{"qid": "88499aa29e45416bba7bf6cc24031571", "answer": "idarucizumab"}
+{"qid": "792b104e025543b5b32f47d3bb1b5c44", "answer": "actin"}
+{"qid": "030fff89fcaf4f7a8d31056a6f48f949", "answer": "ca1"}
+{"qid": "9bb16ae9ce384988b2c0a173f93c5be4", "answer": "drosophila melanogaster"}
+{"qid": "3cd4480a62364a83bc920400cbbe11a2", "answer": "stroke recognition tool - the recognition of stroke"}
+{"qid": "0396509bd1664b019a93887131c5917a", "answer": "stratum"}
+{"qid": "9b31d25da19c48398b26285c6f9b1754", "answer": "mrsa"}
+{"qid": "13712b1db9094ec2bd023d0036495b5d", "answer": "bazex"}
+{"qid": "bf0da804130241878073b33d36565f05", "answer": "hiv"}
+{"qid": "bd9c8ec49b8446ba9d107c61a8280a06", "answer": "opg . rankl"}
+{"qid": "e6f7d1e34eb24319b5b80ce914ab3c03", "answer": "foxp2"}
+{"qid": "4504ae5e0d41435984b259c276b8cf7f", "answer": "\u03b1 - synuclein"}
+{"qid": "77a1eb46e1a443b7a081e53c29ae2ce0", "answer": "focal cortical dysplasia"}
+{"qid": "30fd38ce62fe459b88937446ee06bcbb", "answer": "autosomal dominant"}
+{"qid": "ca9ef69c3b7343959201d7a68ea4835c", "answer": "substantia nigra"}
+{"qid": "9c678887061c48e688347d3c09889e6c", "answer": "instances"}
+{"qid": "62a1183be31d4c208669a471c24c419c", "answer": "tuberculosis"}
+{"qid": "4d9adbc83c164890a231325d350c9a93", "answer": "x"}
+{"qid": "36caa3ccb74340beb0182b812e4fbc13", "answer": "mycobacterium tuberculosis"}
+{"qid": "08c2300228d848599dbb36a771fdc904", "answer": "malaria"}
+{"qid": "ce4f694e2894496cb11f3d96bd206a41", "answer": "denosumab , a monoclonal antibody against rankl"}
+{"qid": "f11fbd28f9c1426ebef6f55f607da505", "answer": "flumazenil"}
+{"qid": "27c2cbb7582d45599f9b7c6674f08fc8", "answer": "alzheimer disease . we have expressed full - length and n- and c - terminal"}
+{"qid": "2f5baf79244c4758a2924c9c539783e3", "answer": "diamond - blackfan"}
+{"qid": "18ad572dfb52412caadfcb13edb5accd", "answer": "diamond - blackfan anemia"}
+{"qid": "d5f8f2fee1f04e1ca38a7afa3aca1b32", "answer": "\u03b1 - synuclein"}
+{"qid": "16cda57d6f444810a77096b293729095", "answer": "autosomal dominant"}
+{"qid": "6459013464a14756bc918aec303e7b5a", "answer": "burke - fahn - marsden"}
+{"qid": "85af34b4c81f4eee8ca3336339fad285", "answer": "diamond - blackfan anemia"}
+{"qid": "fd218c6955b9465b8d895d3154d58ebb", "answer": "l - dopa"}
+{"qid": "8c08be9367e44a248f7e98941e6d911d", "answer": "flumazenil"}
+{"qid": "34511ff99544417f936dc6f115803c07", "answer": "dabigatran"}
+{"qid": "e855ce976fe14a41ae526b78066b56f7", "answer": "\u03b1 - synuclein"}
+{"qid": "efad110a71da44ecb9d4f661d22b9692", "answer": "bcr / abl gene fusion"}
+{"qid": "a60d3d614fee41baa0ba11c2f3e0061f", "answer": "iron"}
+{"qid": "9ec37c93f75941a1a648eced56f60b4f", "answer": "adar"}
+{"qid": "edef18590b2a40aea0dfe32bad4780ea", "answer": "centrosome - related structures associated with a subset of centrosomal components , including gamma - tubulin"}
+{"qid": "15f2966fce5a4fd499e583236823391a", "answer": "encode tumor suppressor proteins , termed neurofibromin ( nf1"}
+{"qid": "0133a9c3b1f74db79d96f61d59105870", "answer": "satrnas"}
+{"qid": "ec77a7e4587a4882bcd45d55cf28a629", "answer": "hemophagocytic lymphohistiocytosis"}
+{"qid": "42c9f1c1eae84fa0885493a31db38248", "answer": "sglt2"}
+{"qid": "66fb49bd52204318bfa262bfd21dadd7", "answer": "nf1"}
+{"qid": "d99ab786d2ec4d17b1540cf721370ef0", "answer": "larval and nymph stages of the tick"}
+{"qid": "7319749c99d7437480b077f9c67163c7", "answer": "sglt2"}
+{"qid": "929fe34ca98f493f90876a2789451097", "answer": "isis - smnrx"}
+{"qid": "2a7364668d534661a202c2f541df1621", "answer": "xk"}
+{"qid": "513ee6b7112740b7afa36d176c0f833f", "answer": "rankl"}
+{"qid": "7247ffe169f140339020744b6f54923c", "answer": "facioscapulohumeral dystrophy ( fshd"}
+{"qid": "2a8c06afe76f42f9ab06708b3adc27fc", "answer": "alzheimer"}
+{"qid": "3ab6c2600b684e3c8863255de919f559", "answer": "facioscapulohumeral"}
+{"qid": "f6eab2419905453ca9b5d473fbd2264f", "answer": "ifn - related genes during the anti - tnf treatment identified changes in type i ifn"}
+{"qid": "e156bae24ed442c581112e4b34e212a5", "answer": "il-1\u03b2"}
+{"qid": "1126a2a0c1ae4863844e2b5cc811f042", "answer": "stress - induced"}
+{"qid": "de7ad57d11e84ddf995786a4c2ecdfe5", "answer": "optn"}
+{"qid": "2a976c6394c14d34bced70aaed51880b", "answer": "set domain"}
+{"qid": "19279b71c3f24df98e4583f3b5b1ad1e", "answer": "bortezomib"}
+{"qid": "a02c851b01e7465280df78b10bd835f5", "answer": "refractory severe tardive dystonia"}
+{"qid": "59b8dc15064f45a0b670dacf91a6101a", "answer": "spliceosome , a highly complex"}
+{"qid": "dbf89c9e9b394c7eae08a4dc8b5b7ce5", "answer": "ptsd"}
+{"qid": "0d068226dea64534a6062b1fe2b2d4a6", "answer": "features . this article argues"}
+{"qid": "03aa34b985ac43f7b28e110d51d52e44", "answer": "prader - willi"}
+{"qid": "510b9aa3109f4e7c94f4cee443af85d9", "answer": "tsss"}
+{"qid": "1617e42426ba4b0483170d68366da72d", "answer": "dabigatran"}
+{"qid": "ce06b70fdbb149389828f705b0d6faaf", "answer": "promoters and enhancers active in liver across 20 mammalian species from six diverse orders"}
+{"qid": "34c1938371614922aa43c41ab4146049", "answer": "crispr - cas"}
+{"qid": "1c541feb2e3d42fa943dbf7eb67303a8", "answer": "stroke"}
+{"qid": "1aedf35d15b449439a4efb13c4c5ebd0", "answer": "secretory phospholipase a2"}
+{"qid": "ddecd10050b24b4abea3af198ad1f3d2", "answer": "connective tissue"}
+{"qid": "d8e2390fcaf54e2d922c90ca3601a0fe", "answer": "autosomal dominant"}
+{"qid": "bad640c274d449bc9a202b19f0948118", "answer": "restless legs syndrome"}
+{"qid": "4fc29c2642a542c698f2e6a566dc9c37", "answer": "facio - scapulo"}
+{"qid": "3a09c991f94d49ac9f85560e9ef63b8f", "answer": "women"}
+{"qid": "f4ea9fa4a4b04d9bb9a697ce1418abdb", "answer": "mrsa"}
+{"qid": "a71bfab3e52a453389459997d51e71f2", "answer": "rna polymerase ii"}
+{"qid": "e6310084df7a436e828bdf5b509a3937", "answer": "paired - like homeodomain"}
+{"qid": "98cb43e4ec95414598cd781412a5d3b8", "answer": "histone methyltransferase that methylates"}
+{"qid": "bab439e02a014e6f9961ed16f6252e78", "answer": "malaria"}
+{"qid": "fab303bb445f49959138cf04ba36638a", "answer": "spleen tyrosine kinase"}
+{"qid": "3b4719a2c58345f4acb8bac904ff6d5c", "answer": "lysosomal"}
+{"qid": "5b8df96552584828a665c27a635ad167", "answer": "a2"}
+{"qid": "94fef0193ac04cd1bd0618898b7f9efd", "answer": "malaria"}
+{"qid": "78f0c50b8c6849b2859237d4e919f8cd", "answer": "hbv / hcv"}
+{"qid": "354a06365eb5430db7d04eb6bea5af55", "answer": "rna polymerase ii"}
+{"qid": "e6f62469f2c6413a8f4161544dcb6f44", "answer": "neuromuscular , degenerative and progressive disease , with an autosomal dominant"}
+{"qid": "60b7c837674146058fe26d85952d6ef1", "answer": "lhcii"}
+{"qid": "5e08c43eb8b64887bf868e17d62cc5c8", "answer": "nerve growth factor"}
+{"qid": "48de9af03ef14e918760efaeb35e7f7b", "answer": "lysosomal"}
+{"qid": "34f812a7bd0645b481c7269f56ee725d", "answer": "jamm"}
+{"qid": "1b48a8555b8b48f79655d8c2e14b0f11", "answer": "nitric"}
+{"qid": "69bb73c08e1848e080576cacd9b2c307", "answer": "epidermal growth factor"}
+{"qid": "de9aff425efc4c5493a66c2ba35ef6cf", "answer": "ptsd"}
+{"qid": "ffa61ee66681406ea24f30171ebbc713", "answer": "tuberculosis"}
+{"qid": "675a5cb5c500436ea513172bdfcae39c", "answer": "bcr - abl"}
+{"qid": "fd6f4f8657ba4d22a07d09f21a98e576", "answer": "bcr - abl"}
+{"qid": "bd86734b94164817a2682dd869cc2412", "answer": "ibrutinib , a bruton 's tyrosine kinase inhibitor in clinical development . ibrutinib"}
+{"qid": "2ae2864e473745f697faa29712bfb28c", "answer": "meningioma"}
+{"qid": "c59a1bea5cff48498990324b541702a8", "answer": "ptsd"}
+{"qid": "7bd8a7a1bafe47c3abd747f77a580738", "answer": "median"}
+{"qid": "704744227c8048f0b703848334d6ec87", "answer": "set - domain"}
+{"qid": "f2a831f2a3fc46d1a5b456712da85b80", "answer": "internus"}
+{"qid": "17805ad0408c48df91cdeb947ccf3371", "answer": "lysosomal"}
+{"qid": "f64f5b4347d34aeba65aabe6813b3e13", "answer": "rapamycin"}
+{"qid": "6e14727992524632b60951a020c5b358", "answer": "connective tissue"}
+{"qid": "8af93cd51edd4155854b8bc805023cf9", "answer": "alpha - synuclein"}
+{"qid": "5a537555a5e843839c53a7739cd95f64", "answer": "leisure"}
+{"qid": "9aae75f96acc4b5ba4f5bc32a39f1e8f", "answer": "x"}
+{"qid": "84150498c316405889993b5f785ce213", "answer": "alzheimer 's disease ( ad ) . apoe4 and its c - terminal"}
+{"qid": "b303b77c66f64d6c905ec9262e272043", "answer": "cellulitis"}
+{"qid": "8a95f412e40d4b0ba12e01f67102652b", "answer": "x chromosome was late labeling in those persons with turner syndrome"}
+{"qid": "25f0f26d8d674227bd9950f0a956f541", "answer": "lhcii"}
+{"qid": "5f58316e6f574ba2a0272fb6ad55acac", "answer": "lyst(bg - grey ) mutation causes instability of the lyst"}
+{"qid": "fdeaba7b6cb142ef8d135fd8ca5d8c0a", "answer": "bcr - abl"}
+{"qid": "66de6d84167b4ec996cf97c56aab9b0c", "answer": "mowat - wilson syndrome ( mws"}
+{"qid": "1d0edfd264d5465fadb7c6268c608128", "answer": "bcr - abl fusion"}
+{"qid": "0852624d3eb84ea89be6dce27c79703c", "answer": "flumazenil"}
+{"qid": "02a0b88b776d4b2d90874b4cebd2bc40", "answer": "nf1"}
+{"qid": "cef4a7fbb56948418ee4895ae79c5294", "answer": "l - dopa were examined . chronic l - dopa"}
+{"qid": "40227f76b00344a78411177630545e7b", "answer": "nf1"}
+{"qid": "d763f93b6e6f410da3bf3ba40aa856aa", "answer": "mrsa"}
+{"qid": "9251d4f613a84dea893231ca779d93d1", "answer": "set domain . thus , suv39h1 utilizes both the chromodomain and the set domain"}
+{"qid": "1deabfc2b8134cc6addbbe34af4c2d6b", "answer": "ibrutinib"}
+{"qid": "fba1c150697a4864bbf8aedacd2d8a94", "answer": "epstein - barr virus"}
+{"qid": "3b3c2659bbbc4cff90c610175d5dae05", "answer": "adar - mediated editing"}
+{"qid": "4f919178eb6f4d1f95f762a80274308e", "answer": "imprinting"}
+{"qid": "39ab6d3436864e6ea8cc1a577a441db5", "answer": "actin cytoskeleton"}
+{"qid": "0913b9c795bf4b8b9f202745a57d8d03", "answer": "interleukin-6"}
+{"qid": "3216ab3e241a45eea283765e3bee89ef", "answer": "iron"}
+{"qid": "67266c29b6f5450a9294e9b1d43aa376", "answer": "alzheimer 's disease"}
+{"qid": "3b79b6f68f774f36a9a24a3a0960be22", "answer": "ataxin-3"}
+{"qid": "a9c0c53d05f1474083e2f1ad8ea28756", "answer": "hiv"}
+{"qid": "d0135b10802e48faa90f81f7c49257ad", "answer": "set domain"}
+{"qid": "ce8e78ef06ed459386b6f776879b5c3c", "answer": "nox"}
+{"qid": "8a4e9bb9b22a4d77b479e8ccadb64015", "answer": "meningioma"}
+{"qid": "19f812e350824082b6b21522a0ba9fa9", "answer": "alzheimer 's disease"}
+{"qid": "6aab95b5bc40449b812caabddc308265", "answer": "mowat - wilson"}
+{"qid": "7206b07769574e8793fa79da4f2aab29", "answer": "alpha - synuclein gene is linked to familial pd . fibril formation by alpha - synuclein"}
+{"qid": "ba84f91cf9b6461d9ee02be446bcdffc", "answer": "chediak - higashi syndrome"}
+{"qid": "a03dcd828ad547288622933b68946271", "answer": "lysosomal trafficking regulator ( lyst"}
+{"qid": "16952fa330f540e6884c87a1a0567566", "answer": "alpha - galactosidase"}
+{"qid": "4a70e96cd685482787d78a9a40f450ca", "answer": "batten"}
+{"qid": "2e559521de4543c0bcd36ddc1c47fc44", "answer": "epidermal growth factor receptor ( egfr ) gene"}
+{"qid": "6b2c71580a6f442ab8605c69fe2e4b66", "answer": "transcribed strand"}
+{"qid": "0e24607baaa74369a7171110551ca197", "answer": "fibroblast growth factor receptor 3 ( fgfr3"}
+{"qid": "de513d59252e439c8c943b250eba9f14", "answer": "restless legs syndrome"}
+{"qid": "8d63de36b0444dddb8a5c62a74c27315", "answer": "alpha - synuclein"}
+{"qid": "206aa6a2af2042ff92e09f48ea2bde5f", "answer": "varespladib"}
+{"qid": "796122644c79446f872e37f300157090", "answer": "diamond blackfan anemia"}
+{"qid": "345ca0bfb3974062abd3ec10a6cbc84a", "answer": "bcr - abl"}
+{"qid": "a09775d345e242aba4996ec706515bc0", "answer": "bcr - abl"}
+{"qid": "4b717cdd7b514fb5922ab011286b4110", "answer": "transcribed strand"}
+{"qid": "a304967557fb41c5a6ef72141bdd17f8", "answer": "opicapone - induced s - comt"}
+{"qid": "2594b3b5c34d4b7f830baf5eb3094b4c", "answer": "alzheimer"}
+{"qid": "4cf67c0ee39c479999455e6a1bb0566a", "answer": "mrsa"}
+{"qid": "550dd36b5da9418ba956fba3c25e7423", "answer": "beta - lactamase . the essential transpeptidase - domain"}
+{"qid": "78f9bca0ee664b74b0be699e63138b9b", "answer": "ifn - signature"}
+{"qid": "e3fcd872a2a34c279d4633b77cd0d266", "answer": "sotos"}
+{"qid": "f5801149c94f4f65b82ee302b13c0d29", "answer": "set domain"}
+{"qid": "62d0c93b45ca401ca522395ff2d09c8b", "answer": "alpha - synuclein"}
+{"qid": "fd3253087bbd4003b295d765450a9097", "answer": "histone"}
+{"qid": "5ae5529a5ae241daa090d3d9f369eb09", "answer": "autosomal dominant"}
+{"qid": "73a1a36fb91449d6a4ac7d06dcdee186", "answer": "stress urinary incontinence"}
+{"qid": "82ca01123a974473aaa47dcd81f47ba5", "answer": "restless legs syndrome"}
+{"qid": "4512014da03b487ba5925f69cc357394", "answer": "hyperplasia"}
+{"qid": "922ae9318d264f8ea1e929e98b4bbe0b", "answer": "connective tissue"}

@@ -11,6 +11,8 @@ import torch.nn.functional as F
 from utils import cuda, load_cached_embeddings
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+
 
 def _sort_batch_by_length(tensor, sequence_lengths):
     """
@@ -294,6 +296,8 @@ class BaselineReader(nn.Module):
             self.args,
             torch.cat((passage_embeddings, aligned_embeddings), 2),
         )  # [batch_size, p_len, p_dim + q_dim]
+
+        # todo add here character and sentence level embeddings
 
         # 3) Passage Encoder
         passage_hidden = self.sorted_rnn(

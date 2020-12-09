@@ -137,9 +137,9 @@ class QADataset(Dataset):
         tokenizer: `Tokenizer` object.
         batch_size: Int. The number of example in a mini batch.
     """
-    def __init__(self, args, path):
+    def __init__(self, args, path, split_datatset=False, is_train=True):
         self.args = args
-        self.meta, self.elems = load_dataset(path)
+        self.meta, self.elems = load_dataset(path, split_datatset, is_train)
         self.samples = self._create_samples()
         self.tokenizer = None
         self.batch_size = args.batch_size if 'batch_size' in args else 1
