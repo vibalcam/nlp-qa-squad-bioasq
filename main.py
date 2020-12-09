@@ -185,7 +185,7 @@ parser.add_argument(
 parser.add_argument(
     '--vocab_size',
     type=int,
-    default=50000,
+    default=100000,
     help='vocabulary size (dynamically set, do not change!)',
 )
 parser.add_argument(
@@ -501,23 +501,27 @@ def main(args):
     # Set up datasets.
     train_dataset = QADataset(args, args.train_path)
     dev_dataset = QADataset(args, args.train_path)
+    train_second_dataset = QADataset(args, args.second_path, split_datatset=True)
+    dev_second_dataset = QADataset(args, args.second_path, split_datatset=True, is_train=False)
+
+    # We make a copy of the original dev_dataset for make more than one prediction
+    original_dev_dataset = dev_dataset
 
     # Create vocabulary and tokenizer.
-    vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
+    vocabulary = Vocabulary(train_dataset.samples + train_second_dataset.samples, args.vocab_size)
     tokenizer = Tokenizer(vocabulary)
-    for dataset in (train_dataset, dev_dataset):
+    for dataset in (train_dataset, dev_dataset, train_second_dataset, dev_second_dataset):
         dataset.register_tokenizer(tokenizer)
     args.vocab_size = len(vocabulary)
     args.pad_token_id = tokenizer.pad_token_id
     print(f'vocab words = {len(vocabulary)}')
 
     # Print number of samples.
-    print(f'train samples = {len(train_dataset)}')
-    print(f'dev samples = {len(dev_dataset)}')
+    print(f'first train samples = {len(train_dataset)}')
+    print(f'first dev samples = {len(dev_dataset)}')
+    print(f'second first train samples = {len(train_second_dataset)}')
+    print(f'second dev samples = {len(dev_second_dataset)}')
     print()
-
-    # We make a copy of the original dev_dataset for make more than one prediction
-    original_dev_dataset = dev_dataset
 
     # Select model.
     model = _select_model(args)
@@ -553,21 +557,8 @@ def main(args):
             # Change embeddings and dev_path to specialize in other dataset
             if epoch == args.epoch_change_embedding:
                 # Set up second datasets.
-                train_dataset = QADataset(args, args.second_path, split_datatset=True)
-                dev_dataset = QADataset(args, args.second_path, split_datatset=True, is_train=False)
-                original_dev_dataset = QADataset(args, args.dev_path)
-
-                # Create vocabulary and tokenizer.
-                vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
-                tokenizer = Tokenizer(vocabulary)
-                for dataset in (train_dataset, dev_dataset, original_dev_dataset):
-                    dataset.register_tokenizer(tokenizer)
-                args.vocab_size = len(vocabulary)
-                args.pad_token_id = tokenizer.pad_token_id
-                print(f'second vocabulary -> number words = {len(vocabulary)}')
-
-                # Reinitialize the embedding layer
-                model.embedding = nn.Embedding(args.vocab_size, args.embedding_dim)
+                train_dataset = train_second_dataset
+                dev_dataset = dev_second_dataset
 
                 # Change the embeddings
                 model.load_pretrained_embeddings(
@@ -613,21 +604,22 @@ def main(args):
         # Write predictions to the output file. Use the printed command
         # below to obtain official EM/F1 metrics.
         write_predictions(args, model, original_dev_dataset)
+        output_original_path = args.output_path
         args.output_path = args.output2_path
         write_predictions(args, model, dev_dataset)
         eval_cmd = (
             'python3 evaluate.py '
-            f'--dataset_path {args.second_path} '
-            f'--output_path {args.output_path}'
+            f'--dataset_path {args.dev_path} '
+            f'--output_path {output_original_path}'
         )
         eval_cmd2 = (
             'python3 evaluate.py '
-            f'--dataset_path {args.dev_path} '
+            f'--dataset_path {args.second_path} '
             f'--output_path {args.output2_path}'
         )
         print()
-        print(f'first predictions written to \'{args.output_path}\'')
-        print(f'second predictions written to \'{args.output_path}\'')
+        print(f'first predictions written to \'{output_original_path}\'')
+        print(f'second predictions written to \'{args.output2_path}\'')
         print(f'compute first EM/F1 with: \'{eval_cmd}\'')
         print(f'compute second EM/F1 with: \'{eval_cmd2}\'')
         print()
