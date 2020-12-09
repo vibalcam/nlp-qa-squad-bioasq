@@ -187,6 +187,11 @@ parser.add_argument(
     help='Type of RNN cell',
 )
 parser.add_argument(
+    '--only_rnn',
+    action='store_true',
+    help='do not use a combination of RNN and CNN',
+)
+parser.add_argument(
     '--bidirectional',
     action='store_true',
     help='use bidirectional RNN',

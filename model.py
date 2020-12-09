@@ -59,6 +59,7 @@ class AlignedAttention(nn.Module):
     Returns:
         Attention scores over question sequences, [batch_size, p_len, q_len].
     """
+
     def __init__(self, p_dim):
         super().__init__()
         self.linear = nn.Linear(p_dim, p_dim)
@@ -92,6 +93,7 @@ class SpanAttention(nn.Module):
     Returns:
         Attention scores over sequence length, [batch_size, len].
     """
+
     def __init__(self, q_dim):
         super().__init__()
         self.linear = nn.Linear(q_dim, 1)
@@ -122,6 +124,7 @@ class BilinearOutput(nn.Module):
     Returns:
         Logits over the input sequence, [batch_size, p_len].
     """
+
     def __init__(self, p_dim, q_dim):
         super().__init__()
         self.linear = nn.Linear(q_dim, p_dim)
@@ -133,6 +136,90 @@ class BilinearOutput(nn.Module):
         # Assign -inf to pad tokens
         p_scores.data.masked_fill_(p_mask.data, -float('inf'))
         return p_scores  # [batch_size, p_len]
+
+
+class CNN(nn.Module):
+    class Conv1dBlock(nn.Module):
+        def __init__(self, in_channels, out_channels, kernel_size, dilation):
+            super().__init__()
+            self.net = nn.Sequential(
+                nn.Conv1d(in_channels, out_channels, kernel_size, dilation=dilation,
+                          padding=(dilation * (kernel_size - 1) // 2)),
+                nn.ReLU(),
+                nn.Conv1d(out_channels, out_channels, kernel_size, dilation=dilation,
+                          padding=(dilation * (kernel_size - 1) // 2)),
+                nn.ReLU()
+            )
+            if in_channels == out_channels:
+                self.skip = lambda x: x
+            else:
+                self.skip = nn.Conv1d(in_channels, out_channels, 1)
+
+        def forward(self, x: torch.Tensor):
+            return self.net(x) + self.skip(x)
+
+    def __init__(self, in_dim, out_dim, dim_layers, kernel_size=3):
+        super().__init__()
+
+        c = in_dim
+        blocks = []
+        dilation = 1
+        for l in dim_layers:
+            blocks.append(self.Conv1dBlock(c, l, kernel_size, dilation))
+            c = l
+            dilation *= 2
+
+        self.net = nn.Sequential(*blocks)
+        self.classifier = nn.Conv1d(c, out_dim, 1)
+
+    def forward(self, x: torch.Tensor):
+        """
+        Args:
+            x: torch.Tensor(B x L x in_dim)
+
+        Returns: torch.Tensor(B x L x out_dim)
+        """
+        x = x.transpose(2, 1)  # B x L x in_dim -> B x in_dim x L
+        z = self.classifier(self.net(x))  # B x L x in_dim -> B x out_dim x L
+        return z.transpose(2, 1)  # B x out_dim x L -> B x L x out_dim
+
+
+class RnnWithCnn(nn.Module):
+    def __init__(self, embedding_dim, hidden_dim, bidirectional, rnn_cell_type='gru', kernel_size=3,
+                 cnn_layers=None):
+        super().__init__()
+        rnn_cell = nn.LSTM if rnn_cell_type == 'lstm' else nn.GRU
+
+        # RNN
+        self.rnn = rnn_cell(
+            embedding_dim,
+            hidden_dim,
+            bidirectional=bidirectional,
+            batch_first=True,
+        )   # B x L x hidden_dim * (2 if bidirectional else 1)
+
+        # CNN
+        self.cnn = None
+        if cnn_layers is not None:
+            self.cnn = CNN(
+                embedding_dim,
+                hidden_dim,
+                dim_layers=cnn_layers,
+                kernel_size=kernel_size
+            )   # B x L x hidden_dim
+
+        self.classifier = nn.Linear(hidden_dim * 3 if bidirectional else hidden_dim * 2,
+                                    hidden_dim * 2 if bidirectional else hidden_dim)
+
+    def forward(self, x: torch.Tensor, sorted_func=None, passage_lengths=None):
+        if sorted_func is None:
+            z = self.rnn(x)
+        else:
+            z = sorted_func(x, passage_lengths, self.rnn)
+
+        if self.cnn is not None:
+            return self.classifier(torch.cat((z, self.cnn(x)), 2))
+        return z
 
 
 class BaselineReader(nn.Module):
@@ -167,6 +254,7 @@ class BaselineReader(nn.Module):
         Logits for start positions and logits for end positions.
         Tuple: ([batch_size, p_len], [batch_size, p_len])
     """
+
     def __init__(self, args):
         super().__init__()
 
@@ -179,23 +267,43 @@ class BaselineReader(nn.Module):
         # Initialize Context2Query (2)
         self.aligned_att = AlignedAttention(args.embedding_dim)
 
-        rnn_cell = nn.LSTM if args.rnn_cell_type == 'lstm' else nn.GRU
-
         # Initialize passage encoder (3)
-        self.passage_rnn = rnn_cell(
+        self.passage_rnn = RnnWithCnn(
             args.embedding_dim * 2,
             args.hidden_dim,
             bidirectional=args.bidirectional,
-            batch_first=True,
+            rnn_cell_type=args.rnn_cell_type,
+            cnn_layers=None if args.only_rnn else [200, 200, 200, 200],
+            kernel_size=3
         )
 
         # Initialize question encoder (4)
-        self.question_rnn = rnn_cell(
+        self.question_rnn = RnnWithCnn(
             args.embedding_dim,
             args.hidden_dim,
             bidirectional=args.bidirectional,
-            batch_first=True,
+            rnn_cell_type=args.rnn_cell_type,
+            cnn_layers=None if args.only_rnn else [100, 100, 100, 100],
+            kernel_size=3
         )
+
+        # rnn_cell = nn.LSTM if args.rnn_cell_type == 'lstm' else nn.GRU
+        #
+        # # Initialize passage encoder (3)
+        # self.passage_rnn = rnn_cell(
+        #     args.embedding_dim * 2,
+        #     args.hidden_dim,
+        #     bidirectional=args.bidirectional,
+        #     batch_first=True,
+        # )
+        #
+        # # Initialize question encoder (4)
+        # self.question_rnn = rnn_cell(
+        #     args.embedding_dim,
+        #     args.hidden_dim,
+        #     bidirectional=args.bidirectional,
+        #     batch_first=True,
+        # )
 
         self.dropout = nn.Dropout(self.args.dropout)
 
@@ -296,15 +404,26 @@ class BaselineReader(nn.Module):
         )  # [batch_size, p_len, p_dim + q_dim]
 
         # 3) Passage Encoder
-        passage_hidden = self.sorted_rnn(
-            passage_embeddings, passage_lengths, self.passage_rnn
+        passage_hidden = self.passage_rnn(
+            passage_embeddings, self.sorted_rnn, passage_lengths
         )  # [batch_size, p_len, p_hid]
         passage_hidden = self.dropout(passage_hidden)  # [batch_size, p_len, p_hid]
 
         # 4) Question Encoder: Encode question embeddings.
-        question_hidden = self.sorted_rnn(
-            question_embeddings, question_lengths, self.question_rnn
+        question_hidden = self.question_rnn(
+            question_embeddings, self.sorted_rnn, question_lengths
         )  # [batch_size, q_len, q_hid]
+
+        # # 3) Passage Encoder
+        # passage_hidden = self.sorted_rnn(
+        #     passage_embeddings, passage_lengths, self.passage_rnn
+        # )  # [batch_size, p_len, p_hid]
+        # passage_hidden = self.dropout(passage_hidden)  # [batch_size, p_len, p_hid]
+        #
+        # # 4) Question Encoder: Encode question embeddings.
+        # question_hidden = self.sorted_rnn(
+        #     question_embeddings, question_lengths, self.question_rnn
+        # )  # [batch_size, q_len, q_hid]
 
         # 5) Question Attentive Sum: Compute weighted sum of question hidden
         #        vectors.
