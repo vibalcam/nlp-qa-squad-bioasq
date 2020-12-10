@@ -143,48 +143,53 @@ class BilinearOutput(nn.Module):
 
 
 class LetterEmbeddings(nn.Module):
-    vocab = string.ascii_lowercase + ' ?!-_'
+    # [ for padding and ] for unknown
+    pad_token = '['
+    unk_token = '['
+    vocab = pad_token + unk_token + string.ascii_lowercase + ' ?!-_'
     idx_pad = 0
     idx_unk = 1
+    max_length = 30
 
-    def __init__(self, word_vocabulary, embedding_dim=25, use_gpu=True):
+    def __init__(self, embedding_dim=25, use_gpu=True):
         super().__init__()
         # Index 0 is for padding and 1 is for an unknown char
-        self.net = nn.Embedding(len(self.vocab) + 2, embedding_dim, scale_grad_by_freq=True)
-        self.word_vocabulary = word_vocabulary
+        # Padding just returns an embedding of 0
+        self.net = nn.Embedding(len(self.vocab) + 1, embedding_dim, scale_grad_by_freq=True)
         self.embedding_dim = embedding_dim
         self.device = torch.device('cuda' if use_gpu else 'cpu')
 
     def forward(self, letters: torch.LongTensor):
+        z = torch.zeros(*letters.shape, self.embedding_dim, device=self.device)
+        z[letters != 0, :] = self.net(letters[letters != 0])
         return self.net(letters)
 
     def get_embeddings(self, word_embeddings: torch.LongTensor, sentences: List[List[str]]):
         shape = word_embeddings.shape
-        word_embeddings = word_embeddings.reshape(-1)
-        words = []
-        max_length = 0
-        for idx in word_embeddings:
-            word = self.word_vocabulary[idx]
-            words.append((word, len(word)))
-            if max_length < len(word):
-                max_length = len(word)
+        words = ''
+        lengths = torch.ones(shape[0] * shape[1], device=self.device)
+        for i in range(shape[0]):
+            n = 0
+            for j in range(shape[1]):
+                embed = word_embeddings[i, j]
+                if embed == 0:
+                    words += (self.max_length * self.pad_token)
+                elif embed == 1:
+                    words += (self.max_length * self.unk_token)
+                else:
+                    word = sentences[i][n]
+                    words += (word + (self.max_length - len(word)) * self.pad_token)
+                    lengths[i * j] = len(word)
+                n += 1
 
-        x = torch.zeros(len(words), self.embedding_dim, device=self.device)
-        for i, (word, length) in enumerate(words):
-            if word == PAD_TOKEN:   # if padding just use idx 0 of embeddings
-                x[i, :] = self(torch.zeros(1, dtype=torch.long, device=self.device)).unsqueeze(0)
-            elif word == UNK_TOKEN:     # # if unknown just use idx 0 of embeddings
-                x[i, :] = self(torch.ones(1, dtype=torch.long, device=self.device)).unsqueeze(0)
-            else:
-                temp = torch.zeros(len(word), dtype=torch.long, device=self.device)     # set all as padding
-                idx = torch.as_tensor(np.array(list(word.lower()))[:, None] == np.array(list(self.vocab))[None],
-                                      device=self.device).nonzero()
-                temp[:length] = 1   # set as unknown
-                temp[idx[:, 0]] = idx[:, 1]     # set the known values
+        x = torch.ones(len(words), dtype=torch.long, device=self.device)
+        idx = torch.as_tensor(np.array(list(words))[:, None] == np.array(list(self.vocab))[None], device=self.device)\
+            .nonzero()
+        x[idx[:, 0]] = idx[:, 1]
 
-                x[i, :] = (self(temp).sum(0)) / length
-
-        return x.reshape(*shape, self.embedding_dim)
+        # return self(x.reshape(*shape, self.max_length)).mean(2)
+        # Instead of mean, take sum and divide by lengths to not penalize small words
+        return self(x.reshape(*shape, self.max_length)).sum(2) / lengths.reshape(*shape)[..., None]
 
 
 class BaselineReader(nn.Module):
@@ -230,7 +235,7 @@ class BaselineReader(nn.Module):
         self.embedding = nn.Embedding(args.vocab_size, args.embedding_dim)  # word embeddings
         self.letter_embedding = None    # letter embeddings
         if args.letter_embedding_dim > 0:
-            self.letter_embedding = LetterEmbeddings(args.vocabulary, args.letter_embedding_dim, args.use_gpu)
+            self.letter_embedding = LetterEmbeddings(args.letter_embedding_dim, args.use_gpu)
 
         # Initialize Context2Query (2)
         self.aligned_att = AlignedAttention(args.embedding_dim + args.letter_embedding_dim)
@@ -342,7 +347,7 @@ class BaselineReader(nn.Module):
         if self.letter_embedding is not None:
             # [batch_size, p_len, p_dim + letter_embeddings]
             passage_embeddings = torch.cat((passage_embeddings,
-                                            self.letter_embedding.get_embeddings(batch['passage'],
+                                            self.letter_embedding.get_embeddings(batch['passages'],
                                                                                  batch['passage_words'])), 2)
             # [batch_size, q_len, q_dim + letter_embeddings]
             question_embeddings = torch.cat((question_embeddings,

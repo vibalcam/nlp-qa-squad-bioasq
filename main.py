@@ -477,7 +477,7 @@ def main(args):
 
     # Create vocabulary and tokenizer.
     vocabulary = Vocabulary(train_dataset.samples, args.vocab_size)
-    args.vocabulary = vocabulary.words
+    # args.vocabulary = vocabulary.words
     tokenizer = Tokenizer(vocabulary)
     for dataset in (train_dataset, dev_dataset):
         dataset.register_tokenizer(tokenizer)
