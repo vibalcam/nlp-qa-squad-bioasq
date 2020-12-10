@@ -500,7 +500,7 @@ def main(args):
 
     # Set up datasets.
     train_dataset = QADataset(args, args.train_path)
-    dev_dataset = QADataset(args, args.train_path)
+    dev_dataset = QADataset(args, args.dev_path)
     train_second_dataset = QADataset(args, args.second_path, split_datatset=True)
     dev_second_dataset = QADataset(args, args.second_path, split_datatset=True, is_train=False)
 
