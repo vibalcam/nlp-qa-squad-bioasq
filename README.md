@@ -138,3 +138,7 @@ We then tried to improve its performance by using torch as much as possible. We 
 
 Despite the performance increase, it was still not good enough and, due to this being the last change implemented and not having a more powerful GPU, we ran out of time and were not able to test its effect.
 
+### Authors
+Vicente Balmaseda \
+Oscar Llorente
+
